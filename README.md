@@ -3,24 +3,21 @@ Built by Gauri Dawar — Full Stack Developer & AI Automation Engineer
 
 ## Projects
 
-### 1. AI Email Classifier n8n
+### 1. AI Email Classifier n8n and Make.com
 Webhook → Groq LLM → Google Sheets  
 Classifies incoming emails as urgent/normal/spam automatically.
+Demonstrates cross-platform automation skills.
 
 ### 2. AI Lead Qualifier  
 Webhook → Groq LLM (scoring) → Groq LLM (email draft) → Google Sheets → Telegram alert  
 Scores leads as Hot/Warm/Cold and drafts personalized follow-up emails.
 
-### 3. Make.com Email Classifier (Source in Email-classifier only)
-Same as Project 1 but built in Make.com.  
-Demonstrates cross-platform automation skills.
-
-### 4. AI Customer Support Ticket Router
+### 3. AI Customer Support Ticket Router
 Webhook → Groq AI → IF nodes → Google Sheets (x3) + Telegram alerts
 Receives support tickets, classifies them as billing/technical/general using AI, 
 routes each to a separate Google Sheet, and sends real-time Telegram notifications.
 
-### 5. AI Social Media Content Scheduler
+### 4. AI Social Media Content Scheduler
 Webhook → Groq AI → Code Node → Google Sheets → Telegram
 Takes any topic as input, generates 3 LinkedIn post variations using AI, 
 saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
