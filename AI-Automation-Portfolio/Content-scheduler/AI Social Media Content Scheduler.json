@@ -1,0 +1,236 @@
+{
+  "name": "AI Social Media Content Scheduler",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "social-scheduler",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "75f985b7-003f-4905-bb0d-2b6cbb1b8e34",
+      "name": "Webhook",
+      "webhookId": "eb562ca8-0e8d-4c09-af53-a7904bf47044"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a social media content writer. Always respond with valid JSON only, no extra text.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Write 3 LinkedIn post variations about AI automation for small businesses. Format as JSON: {\\\"post1\\\": \\\"...\\\", \\\"post2\\\": \\\"...\\\", \\\"post3\\\": \\\"...\\\"}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "ddb903b8-b055-4380-97b7-4061cfec5d6f",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ULhgpe6YXewKnp3b",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.item.json.choices[0].message.content;\nconst cleaned = raw.replace(/```json|```/g, \"\").trim();\nconst parsed = JSON.parse(cleaned);\n\nreturn {\n  json: {\n    topic: $('Webhook').item.json.body.topic,\n    post1: parsed.post1,\n    post2: parsed.post2,\n    post3: parsed.post3,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "17622ed4-2774-4dd4-bb5f-7dfa632a73fd",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1htJXp3svhy9zf9gx_lWOWguiKOs0NS1vy5-4vCiU9ag",
+          "mode": "list",
+          "cachedResultName": "Social Media Scheduler",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1htJXp3svhy9zf9gx_lWOWguiKOs0NS1vy5-4vCiU9ag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1htJXp3svhy9zf9gx_lWOWguiKOs0NS1vy5-4vCiU9ag/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Topic": "={{ $json.topic }}",
+            "Post1": "={{ $json.post1 }}",
+            "Post2": "={{ $json.post2 }}",
+            "Post3": "={{ $json.post3 }}",
+            "Timestamp": "={{ $json.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post1",
+              "displayName": "Post1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post2",
+              "displayName": "Post2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Post3",
+              "displayName": "Post3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "cb0024a8-5367-4fb1-9be1-a6c0d1d0a411",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XFRiXUwZUgPGwFIG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "928256055",
+        "text": "=🗓️ New Content Generated!  Topic: {{ $json.topic }}  ✅ Best Post (Post 1): {{ $json.post1 }}  📝 Also saved Post 2 and Post 3 to Google Sheets for review.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "d4c859a8-62d6-421d-8818-6eefecac5375",
+      "name": "Send a text message",
+      "webhookId": "dc4d7195-7b3b-4007-b6db-2b5c9e573e1e",
+      "credentials": {
+        "telegramApi": {
+          "id": "s44xw2xToPcFetey",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ce418778-28d3-4c87-9e8e-930cc0192ffc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90268d0b7c4898cceb62d693b3183df9e892476343b69e07fd6d07615e72507c"
+  },
+  "id": "1QTNsCkkIytu5Vax",
+  "tags": []
+}

@@ -11,9 +11,19 @@ Classifies incoming emails as urgent/normal/spam automatically.
 Webhook → Groq LLM (scoring) → Groq LLM (email draft) → Google Sheets → Telegram alert  
 Scores leads as Hot/Warm/Cold and drafts personalized follow-up emails.
 
-### 3. Make.com Email Classifier
+### 3. Make.com Email Classifier (Source in Email-classifier only)
 Same as Project 1 but built in Make.com.  
 Demonstrates cross-platform automation skills.
+
+### 4. AI Customer Support Ticket Router
+Webhook → Groq AI → IF nodes → Google Sheets (x3) + Telegram alerts
+Receives support tickets, classifies them as billing/technical/general using AI, 
+routes each to a separate Google Sheet, and sends real-time Telegram notifications.
+
+### 5. AI Social Media Content Scheduler
+Webhook → Groq AI → Code Node → Google Sheets → Telegram
+Takes any topic as input, generates 3 LinkedIn post variations using AI, 
+saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
 
 ## Tech Stack
 - n8n (self-hosted)
@@ -30,6 +40,8 @@ Demonstrates cross-platform automation skills.
 - OAuth2 authentication
 - Dynamic data mapping
 - REST API design
+- IF/Switch node branching and conditional routing
+- Structured JSON prompting for multiple AI outputs
 
 ## Contact
 - LinkedIn:https://www.linkedin.com/in/gauri-dawar/
