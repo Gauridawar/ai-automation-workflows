@@ -1,22 +1,44 @@
-## RAG Chat with PDF
+# AI Automation Workflows
+Built by Gauri Dawar — Full Stack Developer & AI Automation Engineer
 
-### What it does
-Upload any PDF and ask questions about it in natural language.
-The system retrieves relevant sections and answers accurately.
+## Projects
 
-### Architecture
-PDF → PyPDF Loader → Text Splitter → ChromaDB (vector store)
-Question → Embedding → Similarity Search → Context + LLM → Answer
+### 1. AI Email Classifier n8n and Make.com
+Webhook → Groq LLM → Google Sheets  
+Classifies incoming emails as urgent/normal/spam automatically.
+Demonstrates cross-platform automation skills.
 
-### Tech Stack
-- LangChain
-- ChromaDB (local vector database)
-- Sentence Transformers (embeddings)
+### 2. AI Lead Qualifier  
+Webhook → Groq LLM (scoring) → Groq LLM (email draft) → Google Sheets → Telegram alert  
+Scores leads as Hot/Warm/Cold and drafts personalized follow-up emails.
+
+### 3. AI Customer Support Ticket Router
+Webhook → Groq AI → IF nodes → Google Sheets (x3) + Telegram alerts
+Receives support tickets, classifies them as billing/technical/general using AI, 
+routes each to a separate Google Sheet, and sends real-time Telegram notifications.
+
+### 4. AI Social Media Content Scheduler
+Webhook → Groq AI → Code Node → Google Sheets → Telegram
+Takes any topic as input, generates 3 LinkedIn post variations using AI, 
+saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
+
+## Tech Stack
+- n8n (self-hosted)
+- Make.com
 - Groq API (LLaMA 3)
-- Python
+- Google Sheets API + OAuth2
+- Webhooks
+- Postman for testing
 
-### How to run
-1. pip install -r requirements.txt
-2. Add your PDF to docs/ folder
-3. Run create_vectordb.py first
-4. Run rag_pipeline.py to chat
+## Skills Demonstrated
+- AI workflow engineering
+- LLM API integration
+- Event-driven automation
+- OAuth2 authentication
+- Dynamic data mapping
+- REST API design
+- IF/Switch node branching and conditional routing
+- Structured JSON prompting for multiple AI outputs
+
+## Contact
+- LinkedIn:https://www.linkedin.com/in/gauri-dawar/
