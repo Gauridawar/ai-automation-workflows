@@ -22,6 +22,11 @@ Webhook → Groq AI → Code Node → Google Sheets → Telegram
 Takes any topic as input, generates 3 LinkedIn post variations using AI, 
 saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
 
+### 5. AI Resume Reader (RAG Pipeline)
+PDF → PyPDF Loader → ChromaDB (vector store) → Groq LLM → Answer
+Upload any PDF and ask questions about it in natural language. 
+The system retrieves relevant sections using semantic search and answers accurately using only the document content.
+
 ## Tech Stack
 - n8n (self-hosted)
 - Make.com
@@ -29,6 +34,10 @@ saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
 - Google Sheets API + OAuth2
 - Webhooks
 - Postman for testing
+- LangChain
+- ChromaDB (vector database)
+- Sentence Transformers (embeddings)
+- Python
 
 ## Skills Demonstrated
 - AI workflow engineering
@@ -39,6 +48,9 @@ saves all 3 to Google Sheets, and sends the best one to Telegram for approval.
 - REST API design
 - IF/Switch node branching and conditional routing
 - Structured JSON prompting for multiple AI outputs
+- RAG (Retrieval Augmented Generation) pipeline
+- Vector embeddings and semantic search
+- PDF processing and text chunking
 
 ## Contact
 - LinkedIn:https://www.linkedin.com/in/gauri-dawar/
